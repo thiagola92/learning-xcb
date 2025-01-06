@@ -23,6 +23,16 @@ int main() {
   }
 
   xcb_screen_t *screen = iter.data;
+  printf("root->%i\n", screen->root);
+  printf("white_pixel->%i\n", screen->white_pixel);
+  printf("black_pixel->%i\n", screen->black_pixel);
+  printf("current_input_masks->%i\n", screen->current_input_masks);
+  printf("width_in_pixels->%i\n", screen->width_in_pixels);
+  printf("height_in_pixels->%i\n", screen->height_in_pixels);
+  printf("width_in_millimeters->%i\n", screen->width_in_millimeters);
+  printf("height_in_millimeters->%i\n", screen->height_in_millimeters);
+  printf("min_installed_maps->%i\n", screen->min_installed_maps);
+  printf("max_installed_maps->%i\n", screen->max_installed_maps);
 
   xcb_disconnect(connection);
 

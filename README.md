@@ -5,6 +5,8 @@ Nos próprios sites é possível encontrar frases como:
 
 >[TODO: These instructions are out of date. Just reference the main XCB page so we don't have to maintain these instructions in more than one place.](https://xcb.freedesktop.org/tutorial/#installingxcb)
 
+>[TODO](https://xcb.freedesktop.org/tutorial/#thewindowhierarchy)
+
 >[[XXX write me --po8]](https://www.x.org/wiki/guide/concepts/#inputviatouchscreen)
 
 >[[Make whot write this? or steal from http://who-t.blogspot.com? --alanc]](https://www.x.org/wiki/guide/concepts/#advancedinputdevicesandtechniques)
