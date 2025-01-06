@@ -1,4 +1,4 @@
-# learning-x11
+# learning-xcb
 
 ## references
 - https://www.x.org/wiki/guide/
