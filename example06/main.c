@@ -29,10 +29,9 @@ int main() {
 
   // Create graphical context and set to draw to foreground.
   xcb_gcontext_t gcontext_id = xcb_generate_id(connection);
-  xcb_drawable_t drawable_id = screen->root;
   uint32_t gcontext_mask = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
   uint32_t gcontext_values[] = {screen->black_pixel, 0};
-  xcb_create_gc(connection, gcontext_id, drawable_id, gcontext_mask,
+  xcb_create_gc(connection, gcontext_id, screen->root, gcontext_mask,
                 gcontext_values);
 
   // Prepare points do be draw.
@@ -47,6 +46,7 @@ int main() {
     switch (event->response_type & ~0x80) {
     case XCB_EXPOSE:
       // Draw point(s).
+      // NOTE: while drawable is a "xcb_drawable_t", we pass a "xcb_window_t".
       xcb_poly_point(connection, XCB_COORD_MODE_ORIGIN, window_id, gcontext_id,
                      points_len, points);
 
