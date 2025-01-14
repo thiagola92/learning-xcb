@@ -34,9 +34,8 @@ int main() {
   xcb_create_gc(connection, gcontext_id, screen->root, gcontext_mask,
                 gcontext_values);
 
-  // Prepare rectangles.
-  // NOTE: x and y are not the arcs center, they are the top left position where
-  // the draw it start.
+  // Prepare arcs.
+  // NOTE: x and y are not the arcs center! They are the top left of the draw.
   int arcs_len = 9;
   xcb_arc_t arcs[] = {
       {30, 30, 20, 20, 0, 360 << 6},         {100, 30, 20, 60, 0, 360 << 6},

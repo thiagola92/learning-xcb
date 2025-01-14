@@ -19,7 +19,8 @@ int main() {
   xcb_screen_t *screen = iter.data;
   xcb_window_t window_id = xcb_generate_id(connection);
   uint32_t window_mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
-  uint32_t window_values[] = {screen->white_pixel, XCB_EVENT_MASK_EXPOSURE};
+  uint32_t window_values[] = {
+      screen->white_pixel, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_KEY_PRESS};
 
   xcb_create_window(connection, XCB_COPY_FROM_PARENT, window_id, screen->root,
                     0, 0, 300, 300, 10, XCB_WINDOW_CLASS_INPUT_OUTPUT,
@@ -27,26 +28,23 @@ int main() {
   xcb_map_window(connection, window_id);
   xcb_flush(connection);
 
-  xcb_gcontext_t gcontext_id = xcb_generate_id(connection);
-  uint32_t gcontext_mask = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
-  uint32_t gcontext_values[] = {screen->black_pixel, 0};
+  // Sleep for 5 seconds.
+  printf("SLEEPING...\n");
+  usleep(5000000);
+  printf("EVENTS DURING THIS 5 SECONDS:\n");
 
-  xcb_create_gc(connection, gcontext_id, screen->root, gcontext_mask,
-                gcontext_values);
-
-  // Prepare rectangles.
-  int rectangles_len = 2;
-  xcb_rectangle_t rectangles[] = {{10, 30, 10, 60}, {30, 30, 60, 30}};
-
+  // There two ways of getting events:
+  //  - xcb_wait_for_event() will block waiting for events.
+  //  - xcb_poll_for_event() will get an event or return NULL.
+  // NOTE: You will receive in order which they happened.
   xcb_generic_event_t *event;
-  while ((event = xcb_wait_for_event(connection))) {
+  while ((event = xcb_poll_for_event(connection))) {
     switch (event->response_type & ~0x80) {
+    case XCB_KEY_PRESS:
+      printf("BUTTON WAS PRESSED\n");
+      break;
     case XCB_EXPOSE:
-      // Draw rectangles
-      xcb_poly_rectangle(connection, window_id, gcontext_id, rectangles_len,
-                         rectangles);
-
-      xcb_flush(connection);
+      printf("WINDOW WAS EXPOSED\n");
       break;
     default:
       break;
