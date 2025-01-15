@@ -20,7 +20,8 @@ int main() {
   xcb_screen_t *screen = iter.data;
   xcb_window_t window_id = xcb_generate_id(connection);
   uint32_t window_mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
-  uint32_t window_values[] = {screen->white_pixel, XCB_EVENT_MASK_EXPOSURE};
+  uint32_t window_values[] = {screen->white_pixel,
+                              XCB_EVENT_MASK_POINTER_MOTION};
 
   xcb_create_window(connection, XCB_COPY_FROM_PARENT, window_id, screen->root,
                     0, 0, 300, 300, 10, XCB_WINDOW_CLASS_INPUT_OUTPUT,
@@ -28,22 +29,14 @@ int main() {
   xcb_map_window(connection, window_id);
   xcb_flush(connection);
 
-  // We can always change later.
-  uint32_t new_window_mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
-  uint32_t new_window_values[] = {
-      screen->black_pixel, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_KEY_PRESS};
-  xcb_change_window_attributes(connection, window_id, new_window_mask,
-                               new_window_values);
-  xcb_flush(connection);
-
   xcb_generic_event_t *event;
   while ((event = xcb_wait_for_event(connection))) {
     switch (event->response_type & ~0x80) {
-    case XCB_KEY_PRESS:
-      printf("Button press\n");
-      break;
-    case XCB_EXPOSE:
-      printf("Exposed\n");
+    case XCB_MOTION_NOTIFY:
+      xcb_motion_notify_event_t *e = (xcb_motion_notify_event_t *)event;
+      printf("root_x=%i root_y=%i event_x=%i event_y=%i\n", e->root_x,
+             e->root_y, e->event_x, e->event_y);
+
       break;
     default:
       break;

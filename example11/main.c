@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
@@ -36,14 +37,16 @@ int main() {
   while ((event = xcb_wait_for_event(connection))) {
     switch (event->response_type & ~0x80) {
     case XCB_KEY_PRESS:
-      printf("BUTTON PRESS\n");
+      printf("Button press\n");
       break;
     case XCB_EXPOSE:
-      printf("EXPOSED\n");
+      printf("Exposed\n");
       break;
     default:
       break;
     }
+
+    free(event);
   }
 
   xcb_disconnect(connection);

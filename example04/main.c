@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
@@ -40,8 +41,12 @@ int main() {
     default:
       break;
     }
+
+    free(event);
   }
 
+  // xcb_wait_for_event() will return NULL when window is closed,
+  // so we can be sure that this will execute.
   xcb_disconnect(connection);
 
   return 0;

@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
@@ -57,6 +58,8 @@ int main() {
     default:
       break;
     }
+
+    free(event);
   }
 
   xcb_disconnect(connection);
