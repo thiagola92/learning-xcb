@@ -16,16 +16,33 @@ Só consegui chegar em algumas referências mencionadas aqui por pesquisa no Goo
 **Dito isto, os códigos parecem ter funções bem documentadas então é importante sempre ler os docstrings!**  
 
 ## install
+Install X11 and XCB development kit:  
 ```
 sudo apt install libx11-dev
 ```
 
+Install XInput2 extension:
+```
+sudo apt install libxcb-xinput-dev
+```
+
 ## running example
+Linking X11 and XCB:  
 ```
 gcc -o main main.c -lX11 -lxcb
+```
+
+Linking XInput2 too:  
+```
+gcc -o main main.c -lX11 -lxcb -lxcb-xinput
 ```
 
 ## references
 - https://www.x.org/wiki/guide/
 - https://xcb.freedesktop.org/tutorial/
 - https://who-t.blogspot.com/2010/11/high-level-overview-of-grabs.html
+- https://gitlab.freedesktop.org/explore/projects/starred
+    - https://gitlab.freedesktop.org/xorg/app/xinput
+    - https://gitlab.freedesktop.org/xorg/lib/libxcb
+    - https://gitlab.freedesktop.org/xorg/lib/libxi
+- https://stackoverflow.com/a/76576242/3210187

@@ -32,16 +32,14 @@ int main() {
   // To listen to all key inputs (even when the windows is not focus),
   // we need to grab the keyboards focus.
   xcb_grab_keyboard_cookie_t keyboard_cookie =
-      xcb_grab_keyboard(connection, 0, window_id, XCB_CURRENT_TIME,
+      xcb_grab_keyboard(connection, 0, screen->root, XCB_CURRENT_TIME,
                         XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
 
   // We need to get the result from attempting getting the focus.
   xcb_grab_keyboard_reply_t *reply =
       xcb_grab_keyboard_reply(connection, keyboard_cookie, NULL);
 
-  // And now we will probably fail, each is expected because
-  // stealing all the focus from keyboard is not something that any process
-  // should be able to do.
+  // Check for error.
   if (!reply || reply->status != XCB_GRAB_STATUS_SUCCESS) {
     printf("Failed to grab keyboard, status=%i", reply->status);
     free(reply);
