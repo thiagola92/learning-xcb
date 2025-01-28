@@ -60,13 +60,14 @@ int main() {
   typedef struct mask_t {
     xcb_input_device_id_t deviceid;
     uint16_t mask_len;
-    xcb_input_xi_event_mask_t mask;
+    xcb_input_xi_event_mask_t event;
   } mask_t;
 
   // Set to listen to raw keyboard inputs.
   // ATTETION: we pass screen->root as window (instead of our window id).
   mask_t mask = {XCB_INPUT_DEVICE_ALL_MASTER, 1,
-                 XCB_INPUT_XI_EVENT_MASK_RAW_KEY_PRESS};
+                 XCB_INPUT_XI_EVENT_MASK_RAW_KEY_PRESS |
+                     XCB_INPUT_XI_EVENT_MASK_RAW_KEY_RELEASE};
   xcb_void_cookie_t cookie =
       xcb_input_xi_select_events(connection, screen->root, 1, (void *)&mask);
 
@@ -88,9 +89,15 @@ int main() {
 
     switch (extesion_event->event_type) {
     case XCB_INPUT_RAW_KEY_PRESS:
-      xcb_input_raw_key_press_event_t *e =
+      xcb_input_raw_key_press_event_t *e0 =
           (xcb_input_raw_key_press_event_t *)extesion_event;
-      printf("detail=%i\n", e->detail);
+      printf("detail=%i\n", e0->detail);
+
+      break;
+    case XCB_INPUT_RAW_KEY_RELEASE:
+      xcb_input_raw_key_release_event_t *e1 =
+          (xcb_input_raw_key_release_event_t *)extesion_event;
+      printf("detail=%i\n", e1->detail);
 
       break;
     default:
@@ -99,8 +106,6 @@ int main() {
 
     free(event);
   }
-
-  xcb_ungrab_keyboard(connection, XCB_CURRENT_TIME);
 
   xcb_disconnect(connection);
 
