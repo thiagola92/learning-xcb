@@ -9,10 +9,9 @@ int main() {
     printf("Error");
   } else {
     printf("Ok");
-    xcb_disconnect(connection);
   }
 
-  // Needs to disconnect to free memory even on errors.
+  // Error or not, we need to disconnect to free memory.
   xcb_disconnect(connection);
 
   return 0;
