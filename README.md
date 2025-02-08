@@ -26,7 +26,7 @@ Install XInput2 extension:
 sudo apt install libxcb-xinput-dev
 ```
 
-## running example
+## compiling
 Linking X11 and XCB:  
 ```
 gcc -o main main.c -lX11 -lxcb
