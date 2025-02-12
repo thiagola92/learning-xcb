@@ -57,3 +57,5 @@ gcc -o main main.c -lX11 -lxcb -lxcb-xinput -lxcb-keysyms
     - https://gitlab.freedesktop.org/xorg/lib/libxi
 - https://stackoverflow.com/a/76576242/3210187
 - https://xcb.freedesktop.org/XCBToDoKeyboard/
+- [ChatGPT](https://chatgpt.com/)
+    - Unfortunally is easier to ask ChatGPT then find good instrunction about the subject...
