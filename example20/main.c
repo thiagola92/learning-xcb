@@ -102,6 +102,9 @@ int main() {
     free(event);
   }
 
+  // Remember to free memory.
+  xcb_key_symbols_free(keysyms);
+
   xcb_disconnect(connection);
 
   return 0;

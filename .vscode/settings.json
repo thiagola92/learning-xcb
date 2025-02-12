@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "xinput.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "xcb_keysyms.h": "c"
     }
 }
