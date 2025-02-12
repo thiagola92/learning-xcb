@@ -21,9 +21,14 @@ Install X11 and XCB development kit:
 sudo apt install libx11-dev
 ```
 
-Install XInput2 extension:
+Install XInput2 extension to be able to listen inputs without blocking others applications:
 ```
 sudo apt install libxcb-xinput-dev
+```
+
+Install xcb-util-keysyms to translate raw keycodes:  
+```
+sudo apt  install libxcb-keysyms1-dev
 ```
 
 ## compiling
@@ -37,6 +42,11 @@ Linking XInput2 too:
 gcc -o main main.c -lX11 -lxcb -lxcb-xinput
 ```
 
+Linking xcb-util-keysyms too:  
+```
+gcc -o main main.c -lX11 -lxcb -lxcb-xinput -lxcb-keysyms
+```
+
 ## references
 - https://www.x.org/wiki/guide/
 - https://xcb.freedesktop.org/tutorial/
@@ -46,3 +56,4 @@ gcc -o main main.c -lX11 -lxcb -lxcb-xinput
     - https://gitlab.freedesktop.org/xorg/lib/libxcb
     - https://gitlab.freedesktop.org/xorg/lib/libxi
 - https://stackoverflow.com/a/76576242/3210187
+- https://xcb.freedesktop.org/XCBToDoKeyboard/
